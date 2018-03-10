@@ -1,0 +1,68 @@
+PPT1
+H5方向课程体系介绍
+Web开发（一）：HTML、CSS
+Web开发（二）：JS基础、jQuery
+JS进阶：（基础加深、内容扩展）：Web大前端、Web全栈开发、混合App开发
+
+背景知识（ES5、ES6）
+ECMAScript（ES）是JavaScript的语法标准
+前端JavaScript构成：ESCMAScript、DOM、BOM
+ECMAScript的版本（ES5、ES6）
+ES5（2009年12月发布）当前网络上大部分用的是ES5
+ES6（2015年06月发布）增加了许多新特性，并解决了很多ES5中的缺陷，逐渐流行开来。
+
+本科的课内容
+JavaScript（ES5）知识补充及深入（75%）
+-预解析、立即执行表达式（IIFE）、正则表达式
+-作用域及执行上下文、深入理解JS中的this
+-对象属性特性、对象原型、原型继承
+-JS标准内置对象（Array、RegExp、JSON、Math等）
+JavaScript（ES6）（25%）
+-let、count、解构赋值
+-函数扩展、Symbol、Map、Set
+-Class、Generator、Promise
+
+JavaScript深入
+数据类型进阶
+值与类型转换
+表达式及语句进阶
+函数定义及调用函数参数进阶
+函数作用域IIFE、闭包
+JS对象、函数对象、原型链、原型继承
+JS内置类型进阶（Array、Date等）
+JS内置对象（JSON、Math）
+Ajax跨域访问
+JavaScript扩展
+ES6作用域、变量解构赋值
+ES6新增数据结构（Map、st）
+Generator函数、pronise对象
+ES6异步操作Async函数
+
+参考教材及学习工具
+JavaScript参考链接
+http://es5.github.io/
+http://www.ecma-international.org/ecma-262/6.0/imdex.html
+《深入理解JavaScrit》
+《JavaScript权威指南》
+《ES6标准入门》
+Chrome、VSCode
+Chrome控制台调试（ctrl+L不彻底清除、ctrl+R彻底清除、ctrl+鼠标滚轮放大和缩小）
+var Person=function(name,age){
+    this.name=name;
+    this.age=age;
+};
+Person.prototype.showInfo=function(){
+console.log("i'm",this.name,"",this.age,"years old");
+};
+var p1=new Person("jack",20);
+p1.showInfo();
+i'm Jack 20years old
+Sources调试（console.log/trace/error等、断点调试）
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LS01 JS用法<title>
+    <script src="./js/demo01.js"></script>
+
+
