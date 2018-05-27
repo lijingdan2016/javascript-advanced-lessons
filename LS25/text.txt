@@ -1,0 +1,76 @@
+JS事件及事件对象
+
+什么是JS事件？
+JS事件是浏览器或用户自身执行的某种动作（包括前端中的事件，Node中的事件）
+--前端事件主要包括BOM或DOM中发生的特定的交互
+--常见事件（load，click，mouseover，keydown，keyup等）
+window.onload=function(){
+    console.log("window onload");
+    var div2 = document.getElementById("div2");
+    div2.onclick=function(){
+         console.log("div2 click");
+    }
+}
+
+事件对象（包含事件中相应的信息）
+--当事件发生时会产生对应的事件对象（如：鼠标事件对象、键盘事件对象等）
+--事件对象（Event）包含对应事件的相关信息（如触发的元素、坐标信息、键值信息等）
+--理解事件对象的继承关系（例如：Event--UIEvent--MouseEvent）
+window.onload = function(e){
+    console.log("e:",e);
+    var div1 = document.getElementById("div1");
+    var eventHandler = function(e){
+        console.log(e);
+        console.log(e.clientX,e.clientY);//坐标信息
+    }
+    div.onclick = eventHandler;
+}
+除了默认的事件外，用户也可自定义事件对象
+本节介绍基本的事件对象属性，与事件流的相关的属性、方法参见事件流章节
+
+JS事件响应处理
+
+时间相应处理方式
+--HTML事件响应处理
+<div id="div1" onclick="div1click()">
+</div>
+<div id="div2" ondrag="console.log('drag')">
+</div>
+
+
+--DOM0级事件响应处理（比HTML事件响应处理的去耦合性要好很多）
+window.onload = function(e){
+    var div1 = document.getElementById("div1");
+    var eventHandler = function (e) {
+        console.log(e.clientX,e.clientY);
+    }
+    div1.onclick = eventHandler;
+    //div1.onclick=null;//取消事件响应
+}
+
+
+--DOM2级事件响应处理（比DOM0级事件响应处理更强，可以重复，支持自定义事件）
+window.onload=function(e){
+    var div1 = document.getElementById("div1");
+    var eventHandler = function (e) {
+         console.log(e.clientX,e.clientY);
+    }
+    div1.addEventListener("click",eventHandler);
+    //div1.removeEventListener("click",eventHandler);
+}
+
+事件响应的兼容性问题
+老版本IE不支持addEventListener,removeEventListener
+老版本IE支持attachEvent,detachEvent
+一些更特殊的浏览器可能两者都不支持
+function addEvent(ele,type,hander){
+    if(ele.addEventListener){
+        ele.addEventListener(type,hander,false);
+    }else if(ele.attachEvent){
+        ele.attachEvent('on'+type,hander);
+    }else{
+        ele['on'+type] = hander;
+    }
+}
+
+  
