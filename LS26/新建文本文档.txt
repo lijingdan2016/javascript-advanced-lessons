@@ -1,0 +1,96 @@
+JS异步相关概念
+单线程与多线程
+线程是程序执行流的最基本单元（类比单个实体的人），是进程中的一个实体
+一个线程可与同属一个进程的其他线程共享进程所拥有的系统资源
+标准的线程由线程ID，当前指令指针（PC），寄存器集合和堆栈组成
+JS是单线程的，指的是JS引擎解释和执行代码是单线程的，完成所有任务还要配合其他线程
+阻塞与非阻塞（优缺点）
+阻塞是指调用结果返回之前，当前进程会被挂起。调用线程只有在得到结果之后才会返回
+非阻塞不能立刻得到结果之前，该调用不会阻塞当前进程
+
+同步与异步（JS中的任务主要分为两种）
+--同步任务：在主线程上排队执行的任务，只有前一个任务执行完毕，才能执行后一个任务
+--异步任务：不进入主线程，而进入“任务队列”的任务，只有等主线程任务执行完毕，“任务队列”
+开始通知主线程，请求执行任务，该任务才会进入主线程执行。
+
+
+JS异步的几种形式
+
+1回调函数
+-优点：简单、容易理解和部署
+-缺点：不利于代码的阅读和维护，各部分之间高度耦合，流程会很混乱，而且
+每个任务只能指定一个回调函数
+
+事件监听机制
+-任务的执行不取决于代码的顺序执行，而取决于某个事件是否发生
+-优点：容易理解，可以绑定多个事件，每个事件可以指定多个回调函数，块中传递事件和数据
+-缺点：整个程序都要变成事件驱动型，运行流程会变的不清晰。
+
+1发布订阅（观察者模式）
+-发布--订阅模式又叫观察者模式，它定义了对象间的一种一对多的关系，让多个观察者对象同时监听某一个主题对象，
+当一个对象发生改变时，所有依赖于它的对象都将得到通知
+发布--订阅模式的性质与“事件监听”类似，但是我们可以通过“消息中心”，了解存在多少信号，每个信号有多少订阅者，从而监控程序的运行。
+Promise
+-每一个异步任务返回一个Promise对象，可链式的指定回调函数
+-优点：回调函数编程里链式写法，程序的流程更接近人们的思维方式，便于理解和代码追踪
+-缺点：要求対异步有更深入的了解
+
+
+JS异步与数据交互案例
+Ajax
+-AJAX=Asynchrous JavaScriot and XML(异步JavaScript和XML，也可用JSON）
+AJAX是一种使用现有标准和技术的综合实现
+AjAx是与服务器交换数据并更新部分网页的艺术，在不重新加载整个页面的情况下
+实现方式（XMLHttpRequestrian对象，JQuery中的ajaxd对象）
+XMLHttpRequestrian
+--通过XMLHttpRequest实例化的对象可用于后台与服务器交换数据，在不重新加载整个网页的情况下，对网页的某部分进行更新
+XMLHttpRequest对象的属性
+readyState：表示XMLHttpREquest对象的状态:0:未初始化。对象已创建，未调用open
+1：open方法成功调用，单Sendf但方法未调用
+2：send方法已经调用，尚未开始接受数据
+3：正在接收数据，Http响应头信息已经接受，但尚未接收完成
+4：完成，及响应数据接受完成
+
+
+
+//函数回调
+//案例一 同步执行的回调
+var arr1=[1,3,5,7,9];
+console.log("arr1:",arr1);
+var newArray1 = arr1.map(function(a){
+    return a*a;
+});
+console.log("newArray1:",newArray1);
+
+var arr2=[1,3,5,7,9];
+console.log("arr2:",arr2);
+var newArray2 = =arr2.filter(function(a){//产生新数组，新数组的元素是返回true的那些元素
+      return (a>2&&a<8)?true:false
+});
+console.log("newArray2:",newArray2);
+
+//案例二 异步执行的回调(通过定时器模拟)
+var LTimeOperation = function(taskID){
+    var id = taskID;
+    //思考什么时候将方法定义在构造函数内，什么时候定义在构造函数的prototype属性上
+    this.go = function(callback){
+         console.log("Start LTimeOperaton #"+id);
+         var delay=parseInt((Math.random()  * 10000000) % 5000);
+         setTimeout(function(){
+                console.log('task #'+id+' cost '+delay+' ms.');
+                callback();
+         },delay);
+    }
+};
+
+function f2(){
+     console.log('this is f2,i am callback!\n');
+}
+for(var i=0;i<5;i++)
+{
+   var task = new LTimeOperation(i);
+   task.go(f2);
+}
+
+
+
